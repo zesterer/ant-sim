@@ -10,8 +10,9 @@ namespace anti_sim
     {
         static int Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Application app = new Application();
 
+            Console.Write("Press any key to continue...");
             Console.ReadKey();
 
             return 0;

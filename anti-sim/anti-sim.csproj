@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ant.cs" />
+    <Compile Include="application.cs" />
+    <Compile Include="cell.cs" />
+    <Compile Include="world.cs" />
+    <Compile Include="program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
