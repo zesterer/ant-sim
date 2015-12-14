@@ -8,14 +8,13 @@ namespace anti_sim
 {
     class Application
     {
-        private World testWorld;
+        private SimContext main_context;
 
         public Application()
         {
             Console.WriteLine("Created application");
 
-            this.testWorld = new World();
-            this.testWorld.setup(32, 32);
+            this.main_context = new SimContext();
         }
     }
 }

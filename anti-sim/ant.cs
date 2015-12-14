@@ -11,7 +11,7 @@ namespace anti_sim
         int x = 0;
         int y = 0;
 
-        Ant()
+        public Ant()
         {
             Console.WriteLine("Created ant");
         }
