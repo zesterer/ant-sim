@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="ant.cs" />
     <Compile Include="application.cs" />
-    <Compile Include="cell.cs" />
+    <Compile Include="region.cs" />
     <Compile Include="simcontext.cs" />
     <Compile Include="world.cs" />
     <Compile Include="program.cs" />

@@ -12,7 +12,7 @@ namespace anti_sim
         private int width;
         private int height;
 
-        private ArrayList cells = new ArrayList();
+        private ArrayList regions = new ArrayList();
 
         public World()
         {
@@ -25,22 +25,22 @@ namespace anti_sim
             this.width = width;
             this.height = height;
 
-            this.cells.Clear();
+            this.regions.Clear();
 
             for (int x = 0; x < width; x ++)
             {
                 for (int y = 0; y < height; y ++)
                 {
-                    this.cells.Add(new Cell());
+                    this.regions.Add(new Region());
                 }
             }
 
             Console.WriteLine("Set up world with dimensions {0}x{1}", this.width, this.height);
         }
 
-        public Cell getCell(int x, int y)
+        public Region getRegion(int x, int y)
         {
-            return (Cell)this.cells[y * this.width + x];
+            return (Region)this.regions[y * this.width + x];
         }
     }
 }
