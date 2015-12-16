@@ -8,12 +8,23 @@ namespace anti_sim
 {
     class Ant
     {
-        int x = 0;
-        int y = 0;
+		private Vec2 position;
+		private int lifetime = 0;
 
         public Ant()
         {
             Console.WriteLine("Created ant");
         }
+
+		public Vec2 Position
+		{
+			get { return this.position; }
+			set { this.position = value; }
+		}
+
+		void tick()
+		{
+			this.lifetime ++;
+		}
     }
 }

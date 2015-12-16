@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="anti-sim.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../../../../../media/master-storage/Documents/School/University/C#/SOFT152/ant-sim/anti-sim/program.cs">
+    <Files>
+      <File FileName="../../../../../../../../../media/master-storage/Documents/School/University/C#/SOFT152/ant-sim/anti-sim/ant.cs" Line="20" Column="1" />
+      <File FileName="../../../../../../../../../media/master-storage/Documents/School/University/C#/SOFT152/ant-sim/anti-sim/program.cs" Line="22" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
