@@ -13,6 +13,18 @@ namespace anti_sim
 			this.y = y;
 		}
 
+		public int X
+		{
+			get { return this.x; }
+			set { this.x = value; }
+		}
+
+		public int Y
+		{
+			get { return this.y; }
+			set { this.y = value; }
+		}
+
 		public static Vec2 operator +(Vec2 vec0, Vec2 vec1)
 		{
 			return new Vec2(vec0.x + vec1.x, vec0.y + vec1.y);

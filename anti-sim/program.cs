@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace anti_sim
 {
@@ -12,8 +13,14 @@ namespace anti_sim
         {
             Application app = new Application();
 
-            Console.Write("Press any key to continue...");
-            Console.ReadKey();
+			while (Console.ReadKey().Key != ConsoleKey.Q)
+			{
+				Console.WriteLine("Ticking...");
+
+				app.Tick();
+
+				Thread.Sleep(1000);
+			}
 
             return 0;
         }

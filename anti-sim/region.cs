@@ -9,14 +9,14 @@ namespace anti_sim
 {
     class Region
     {
-        private ArrayList ants = new ArrayList();
+		private List<Ant> ants = new List<Ant>();
 
-        public void clear()
+        public void Clear()
         {
             this.ants.Clear();
         }
 
-        public bool appendAnt(Ant ant)
+        public bool AppendAnt(Ant ant)
         {
             if (!this.ants.Contains(ant))
             {

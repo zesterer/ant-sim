@@ -9,7 +9,7 @@ namespace anti_sim
     class Ant
     {
 		private Vec2 position;
-		private int lifetime = 0;
+		private int time = 0;
 
         public Ant()
         {
@@ -22,9 +22,9 @@ namespace anti_sim
 			set { this.position = value; }
 		}
 
-		void tick()
+		public void Tick()
 		{
-			this.lifetime ++;
+			this.time ++;
 		}
     }
 }

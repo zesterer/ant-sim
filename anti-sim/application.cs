@@ -16,5 +16,10 @@ namespace anti_sim
 
             this.main_context = new SimContext();
         }
+
+		public void Tick()
+		{
+			this.main_context.Tick();
+		}
     }
 }
