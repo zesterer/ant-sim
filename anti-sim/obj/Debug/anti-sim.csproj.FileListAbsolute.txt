@@ -6,3 +6,4 @@
 \\Filespace\Home\jsbarretto\Modules\SOFT152\Exercises\Assignment\ant-sim\anti-sim\obj\Debug\anti-sim.pdb
 \\Filespace\Home\jsbarretto\Modules\SOFT152\Exercises\Assignment\ant-sim\anti-sim\obj\Debug\anti-sim.csproj.GenerateResource.Cache
 \\Filespace\Home\jsbarretto\Modules\SOFT152\Exercises\Assignment\ant-sim\anti-sim\obj\Debug\AntSim.Frontend.DisplayForm.resources
+\\Filespace\Home\jsbarretto\Modules\SOFT152\Exercises\Assignment\ant-sim\anti-sim\obj\Debug\anti_sim.Properties.Resources.resources

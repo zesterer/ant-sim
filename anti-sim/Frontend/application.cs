@@ -29,9 +29,6 @@ namespace AntSim
             {
                 while (this.display_form.Visible)
                 {
-                    //Tick the simulation context
-                    Console.WriteLine("Ticking...");
-
                     //Perform GUI events
                     System.Windows.Forms.Application.DoEvents();
                 }
@@ -39,6 +36,9 @@ namespace AntSim
 
             public void TickSimulation()
             {
+                //Tick the simulation context
+                Console.WriteLine("Ticking...");
+
                 this.main_context.Tick();
             }
         }

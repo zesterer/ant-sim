@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "anti-sim", "anti-sim.csproj", "{9ED4F261-A0D3-4C91-BCFA-D00B7A32CFCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ant-sim", "ant-sim.csproj", "{9ED4F261-A0D3-4C91-BCFA-D00B7A32CFCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

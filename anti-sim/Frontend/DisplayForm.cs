@@ -16,6 +16,8 @@ namespace AntSim
         {
             private Application parent;
 
+            private bool paused;
+
              public DisplayForm(Application parent = null)
              {
                 this.SetParent(parent);
@@ -30,7 +32,32 @@ namespace AntSim
             private void simulationTimer_Tick(object sender, EventArgs e)
             {
                 if (this.parent != null)
-                    this.parent.TickSimulation();
+                {
+                    if (this.paused)
+                        this.parent.TickSimulation();
+                }
+            }
+
+            private void pauseButton_Click(object sender, EventArgs e)
+            {
+                this.paused ^= true;
+
+                if (this.paused)
+                {
+                    /*System.Reflection.Assembly thisExe;
+                    thisExe = System.Reflection.Assembly.GetExecutingAssembly();
+                    string[] resources = thisExe.GetManifestResourceNames();
+                    string list = "";
+
+                    // Build the string of resources.
+                    foreach (string resource in resources)
+                        list += resource + "\r\n";
+
+                    Console.WriteLine(list);
+
+                    System.IO.Stream pauseIcon = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("AntSim.Properties.Resources.pauseIcon.png");
+                    this.pauseButton.Image = Image.FromStream(pauseIcon);*/
+                }
             }
         }
     }
