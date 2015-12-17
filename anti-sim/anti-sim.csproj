@@ -41,14 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ant.cs" />
-    <Compile Include="application.cs" />
-    <Compile Include="region.cs" />
-    <Compile Include="simcontext.cs" />
-    <Compile Include="world.cs" />
+    <Compile Include="simulation\ant.cs" />
+    <Compile Include="simulation\application.cs" />
+    <Compile Include="simulation\region.cs" />
+    <Compile Include="simulation\simcontext.cs" />
+    <Compile Include="simulation\world.cs" />
     <Compile Include="program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="vec2.cs" />
+    <Compile Include="common\vec2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

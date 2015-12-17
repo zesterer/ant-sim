@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace anti_sim
+namespace AntSim
 {
     class Program
     {
         static int Main(string[] args)
         {
-            Application app = new Application();
+            Simulation.Application app = new Simulation.Application();
 
-			while (Console.ReadKey().Key != ConsoleKey.Q)
+			while (true)
 			{
 				Console.WriteLine("Ticking...");
 
