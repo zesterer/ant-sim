@@ -13,14 +13,7 @@ namespace AntSim
         {
             Frontend.Application app = new Frontend.Application();
 
-			while (true)
-			{
-				Console.WriteLine("Ticking...");
-
-				app.Tick();
-
-				Thread.Sleep(1000);
-			}
+            app.Run();
 
             return 0;
         }

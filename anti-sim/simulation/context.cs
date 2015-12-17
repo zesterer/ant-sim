@@ -9,12 +9,12 @@ namespace AntSim
 {
     namespace Simulation
     {
-        class SimContext
+        class Context
         {
             private World world;
             private List<Ant> ants = new List<Ant>();
 
-            public SimContext()
+            public Context()
             {
                 world = new World();
                 world.Setup(16, 16, 16);
