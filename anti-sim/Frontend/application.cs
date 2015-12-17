@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace AntSim
 {
-    namespace Simulation
+    namespace Frontend
     {
         class Application
         {
-            private SimContext main_context;
+            private Simulation.SimContext main_context;
 
             public Application()
             {
                 Console.WriteLine("Created application");
 
-                this.main_context = new SimContext();
+                this.main_context = new Simulation.SimContext();
             }
 
             public void Tick()

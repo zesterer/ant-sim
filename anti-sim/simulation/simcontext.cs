@@ -37,6 +37,10 @@ namespace AntSim
                 foreach (Ant ant in this.ants)
                     ant.Tick();
 
+                //Finish the tick for the ants
+                foreach (Ant ant in this.ants)
+                    ant.PostTick();
+
                 //Tick the world
                 this.world.Tick();
             }

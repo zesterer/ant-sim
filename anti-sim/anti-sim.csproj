@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="simulation\ant.cs" />
-    <Compile Include="simulation\application.cs" />
+    <Compile Include="Frontend\application.cs" />
     <Compile Include="simulation\region.cs" />
     <Compile Include="simulation\simcontext.cs" />
     <Compile Include="simulation\world.cs" />

@@ -11,7 +11,7 @@ namespace AntSim
     {
         static int Main(string[] args)
         {
-            Simulation.Application app = new Simulation.Application();
+            Frontend.Application app = new Frontend.Application();
 
 			while (true)
 			{
