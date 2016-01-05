@@ -58,7 +58,13 @@ namespace AntSim
                     System.IO.Stream pauseIcon = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("AntSim.Properties.Resources.pauseIcon.png");
                     this.pauseButton.Image = Image.FromStream(pauseIcon);*/
                 }
-            }
+			}
+
+			private void drawPanel_Paint(object sender, PaintEventArgs e)
+			{
+				SolidBrush brush = new SolidBrush(Color.Blue);
+				e.Graphics.FillRectangle(brush, new RectangleF(10, 10, 20, 20));
+			}
         }
     }
 }
