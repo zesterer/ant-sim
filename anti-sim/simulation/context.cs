@@ -13,6 +13,7 @@ namespace AntSim
         {
             private World world;
             private List<Ant> ants = new List<Ant>();
+			private List<Nest> nests = new List<Nest>();
 
             public Context()
             {

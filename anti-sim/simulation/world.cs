@@ -50,6 +50,11 @@ namespace AntSim
                 Console.WriteLine("Set up world with regional dimensions {0}x{1}", this.widthInRegions, this.heightInRegions);
             }
 
+			public Common.Vec2 Size
+			{
+				get { return new Common.Vec2(this.widthInRegions * this.regionSize, this.heightInRegions * this.regionSize); }
+			}
+
             public void Reset()
             {
                 foreach (Region region in this.regions)

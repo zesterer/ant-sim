@@ -9,11 +9,17 @@ namespace AntSim
             public int x;
             public int y;
 
-            public Vec2(int x, int y)
+            public Vec2(int i)
             {
-                this.x = x;
-                this.y = y;
+                this.x = i;
+                this.y = i;
             }
+
+			public Vec2(int x, int y)
+			{
+				this.x = x;
+				this.y = y;
+			}
 
             public int X
             {
