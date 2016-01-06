@@ -15,14 +15,24 @@ namespace AntSim
             private List<Ant> ants = new List<Ant>();
 			private List<Nest> nests = new List<Nest>();
 
+			Random generator = new Random(142857);
+
             public Context()
             {
-                world = new World();
-                world.Setup(16, 16, 16);
+				this.world = new World();
+				this.world.Setup(16, 16, 16);
 
                 //Create a few test ants
-                for (int i = 0; i < 10; i++)
-                    ants.Add(new Ant());
+				for (int i = 0; i < 100; i++)
+				{
+					Ant ant = new Ant();
+					ant.placeRandomly(this.world, this.generator);
+					this.ants.Add(ant);
+				}
+
+				//Create a few test nests
+				for (int i = 0; i < 10; i++)
+					this.nests.Add(new Nest());
             }
 
             public void Tick()
@@ -36,15 +46,25 @@ namespace AntSim
 
                 //Tick the ants
                 foreach (Ant ant in this.ants)
-                    ant.Tick();
+					ant.Tick(this.generator);
 
                 //Finish the tick for the ants
                 foreach (Ant ant in this.ants)
-                    ant.PostTick();
+					ant.PostTick(this.world);
 
                 //Tick the world
                 this.world.Tick();
             }
+
+			public int AntCount
+			{
+				get { return this.ants.Count; }
+			}
+
+			public Ant getAnt(int index)
+			{
+				return this.ants[index];
+			}
         }
     }
 }

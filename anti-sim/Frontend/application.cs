@@ -8,7 +8,7 @@ namespace AntSim
 {
     namespace Frontend
     {
-        public class Application : System.Windows.Forms.ApplicationContext
+        class Application : System.Windows.Forms.ApplicationContext
         {
             private Simulation.Context main_context;
             private DisplayForm display_form;
@@ -33,6 +33,11 @@ namespace AntSim
                     System.Windows.Forms.Application.DoEvents();
                 }
             }
+
+			public Simulation.Context Context
+			{
+				get { return this.main_context; }
+			}
 
             public void TickSimulation()
             {

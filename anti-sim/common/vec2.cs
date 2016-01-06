@@ -52,6 +52,11 @@ namespace AntSim
             {
                 return new Vec2(vec0.x / vec1.x, vec0.y / vec1.y);
             }
+
+			public static Vec2 operator %(Vec2 vec0, Vec2 vec1)
+			{
+				return new Vec2(vec0.x % vec1.x, vec0.y % vec1.y);
+			}
         }
     }
 }

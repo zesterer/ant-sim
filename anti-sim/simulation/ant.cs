@@ -19,6 +19,12 @@ namespace AntSim
                 Console.WriteLine("Created ant");
             }
 
+			public Ant(Common.Vec2 position)
+			{
+				this.position = position;
+				Console.WriteLine("Created ant at ({0}, {1})", position.X, position.Y);
+			}
+
             public Common.Vec2 Position
             {
                 get { return this.position; }
@@ -30,14 +36,29 @@ namespace AntSim
                 this.velocity += vec;
             }
 
-            public void Tick()
+			public void placeRandomly(World world, Random generator = null)
+			{
+				if (generator == null)
+					generator = new Random(142857);
+				
+				this.position = new Common.Vec2(generator.Next(0, world.Size.x), generator.Next(0, world.Size.y));
+			}
+
+			public void Tick(Random generator = null)
             {
+				if (generator == null)
+					generator = new Random(142857);
+				
                 //Do stuff
+				this.Move(new Common.Vec2(generator.Next(-1, 2), generator.Next(-1, 2)));
             }
 
-            public void PostTick()
+			public void PostTick(World world)
             {
-                this.position += this.velocity;
+                this.Position += this.velocity;
+
+				this.Position = (this.Position + world.Size) % world.Size;
+
                 this.time++;
             }
         }

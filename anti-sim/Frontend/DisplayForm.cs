@@ -12,7 +12,7 @@ namespace AntSim
 {
     namespace Frontend
     {
-        public partial class DisplayForm : Form
+        partial class DisplayForm : Form
         {
             private Application parent;
 
@@ -34,8 +34,10 @@ namespace AntSim
                 if (this.parent != null)
                 {
                     if (this.paused)
-                        this.parent.TickSimulation();
+						this.parent.TickSimulation();
                 }
+
+				this.drawPanel.Refresh();
             }
 
             private void pauseButton_Click(object sender, EventArgs e)
@@ -60,10 +62,22 @@ namespace AntSim
                 }
 			}
 
+			private void DrawAnt(Graphics graphics, Brush brush, Common.Vec2 position)
+			{
+				graphics.FillRectangle(brush, new RectangleF(position.X - 2, position.Y - 2, 4, 4));
+			}
+
 			private void drawPanel_Paint(object sender, PaintEventArgs e)
 			{
+				e.Graphics.Clear(Color.White);
+
 				SolidBrush brush = new SolidBrush(Color.Blue);
-				e.Graphics.FillRectangle(brush, new RectangleF(10, 10, 20, 20));
+
+				for (int i = 0; i < this.parent.Context.AntCount; i ++)
+				{
+					Simulation.Ant ant = this.parent.Context.getAnt(i);
+					this.DrawAnt(e.Graphics, brush, ant.Position);
+				}
 			}
         }
     }
