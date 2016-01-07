@@ -10,33 +10,40 @@ namespace AntSim
     {
         class Application : System.Windows.Forms.ApplicationContext
         {
-            private Simulation.Context main_context;
-            private DisplayForm display_form;
+            private Simulation.Context mainContext;
+            private DisplayForm displayForm;
+			private int frameSkip = 4;
 
             public Application()
             {
                 Console.WriteLine("Created application");
 
-                this.display_form = new DisplayForm();
-                this.display_form.SetParent(this);
-                this.display_form.Show();
+                this.displayForm = new DisplayForm();
+                this.displayForm.SetParent(this);
+                this.displayForm.Show();
                 System.Windows.Forms.Application.EnableVisualStyles();
 
-                this.main_context = new Simulation.Context();
+                this.mainContext = new Simulation.Context();
             }
 
             public void Run()
             {
-                while (this.display_form.Visible)
+                while (this.displayForm.Visible)
                 {
                     //Perform GUI events
                     System.Windows.Forms.Application.DoEvents();
                 }
             }
 
+			public int FrameSkip
+			{
+				get { return this.frameSkip; }
+				set { this.frameSkip = Math.Max(0, value); }
+			}
+
 			public Simulation.Context Context
 			{
-				get { return this.main_context; }
+				get { return this.mainContext; }
 			}
 
             public void TickSimulation()
@@ -44,7 +51,8 @@ namespace AntSim
                 //Tick the simulation context
                 Console.WriteLine("Ticking...");
 
-                this.main_context.Tick();
+				for (int i = 0; i < this.frameSkip; i ++)
+	                this.mainContext.Tick();
             }
         }
     }

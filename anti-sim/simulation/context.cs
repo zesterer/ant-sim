@@ -11,6 +11,7 @@ namespace AntSim
     {
         class Context
         {
+			private int time = 0;
             private World world;
             private List<Ant> ants = new List<Ant>();
 			private List<Nest> nests = new List<Nest>();
@@ -23,7 +24,7 @@ namespace AntSim
 				this.world.Setup(16, 16, 16);
 
                 //Create a few test ants
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 1000; i++)
 				{
 					Ant ant = new Ant();
 					ant.placeRandomly(this.world, this.generator);
@@ -34,6 +35,11 @@ namespace AntSim
 				for (int i = 0; i < 10; i++)
 					this.nests.Add(new Nest());
             }
+
+			public int Time
+			{
+				get { return this.time; }
+			}
 
             public void Tick()
             {
@@ -54,6 +60,7 @@ namespace AntSim
 
                 //Tick the world
                 this.world.Tick();
+				this.time ++;
             }
 
 			public int AntCount

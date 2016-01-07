@@ -56,6 +56,7 @@ namespace AntSim
 			public void PostTick(World world)
             {
                 this.Position += this.velocity;
+				this.velocity = new Common.Vec2(0, 0);
 
 				this.Position = (this.Position + world.Size) % world.Size;
 

@@ -15,11 +15,13 @@ namespace AntSim
         partial class DisplayForm : Form
         {
             private Application parent;
-
             private bool paused;
+			private int lastDrawTime = 0;
 
              public DisplayForm(Application parent = null)
              {
+				this.DoubleBuffered = true;
+
                 this.SetParent(parent);
                 this.InitializeComponent();
              }
@@ -33,11 +35,15 @@ namespace AntSim
             {
                 if (this.parent != null)
                 {
-                    if (this.paused)
+                    if (!this.paused)
 						this.parent.TickSimulation();
                 }
 
-				this.drawPanel.Refresh();
+				if (this.lastDrawTime != this.parent.Context.Time)
+				{
+					this.drawPanel.Refresh();
+					this.lastDrawTime = this.parent.Context.Time;
+				}
             }
 
             private void pauseButton_Click(object sender, EventArgs e)
@@ -46,6 +52,7 @@ namespace AntSim
 
                 if (this.paused)
                 {
+					this.pauseButton.Text = "Resume";
                     /*System.Reflection.Assembly thisExe;
                     thisExe = System.Reflection.Assembly.GetExecutingAssembly();
                     string[] resources = thisExe.GetManifestResourceNames();
@@ -60,23 +67,26 @@ namespace AntSim
                     System.IO.Stream pauseIcon = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("AntSim.Properties.Resources.pauseIcon.png");
                     this.pauseButton.Image = Image.FromStream(pauseIcon);*/
                 }
+				else
+					this.pauseButton.Text = "Pause";
 			}
 
-			private void DrawAnt(Graphics graphics, Brush brush, Common.Vec2 position)
+			private void DrawAnt(Graphics graphics, Brush brush, Common.Vec2 position, int radius)
 			{
-				graphics.FillRectangle(brush, new RectangleF(position.X - 2, position.Y - 2, 4, 4));
+				graphics.FillEllipse(brush, new RectangleF(position.X - radius, position.Y - radius, radius * 2 + 1, radius * 2 + 1));
 			}
 
 			private void drawPanel_Paint(object sender, PaintEventArgs e)
 			{
+
 				e.Graphics.Clear(Color.White);
 
-				SolidBrush brush = new SolidBrush(Color.Blue);
+				SolidBrush brush = new SolidBrush(Color.Black);
 
 				for (int i = 0; i < this.parent.Context.AntCount; i ++)
 				{
 					Simulation.Ant ant = this.parent.Context.getAnt(i);
-					this.DrawAnt(e.Graphics, brush, ant.Position);
+					this.DrawAnt(e.Graphics, brush, ant.Position, 2);
 				}
 			}
         }
