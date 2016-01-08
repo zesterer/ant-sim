@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="common\vec2.cs" />
     <Compile Include="simulation\nest.cs" />
+    <Compile Include="simulation\food.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

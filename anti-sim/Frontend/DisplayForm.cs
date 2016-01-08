@@ -86,7 +86,7 @@ namespace AntSim
 				for (int i = 0; i < this.parent.Context.AntCount; i ++)
 				{
 					Simulation.Ant ant = this.parent.Context.getAnt(i);
-					this.DrawAnt(e.Graphics, brush, ant.Position, 2);
+					this.DrawAnt(e.Graphics, brush, ant.Position, 0);
 				}
 			}
         }

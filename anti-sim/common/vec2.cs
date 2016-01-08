@@ -33,6 +33,11 @@ namespace AntSim
                 set { this.y = value; }
             }
 
+			public double Magnitude
+			{
+				get { return Math.Sqrt(this.X * this.X + this.Y * this.Y); }
+			}
+
             public static Vec2 operator +(Vec2 vec0, Vec2 vec1)
             {
                 return new Vec2(vec0.x + vec1.x, vec0.y + vec1.y);
@@ -56,6 +61,31 @@ namespace AntSim
 			public static Vec2 operator %(Vec2 vec0, Vec2 vec1)
 			{
 				return new Vec2(vec0.x % vec1.x, vec0.y % vec1.y);
+			}
+
+			public static Vec2 operator +(Vec2 vec0, int scalar)
+			{
+				return new Vec2(vec0.x + scalar, vec0.y + scalar);
+			}
+
+			public static Vec2 operator -(Vec2 vec0, int scalar)
+			{
+				return new Vec2(vec0.x - scalar, vec0.y - scalar);
+			}
+
+			public static Vec2 operator *(Vec2 vec0, int scalar)
+			{
+				return new Vec2(vec0.x * scalar, vec0.y * scalar);
+			}
+
+			public static Vec2 operator /(Vec2 vec0, int scalar)
+			{
+				return new Vec2(vec0.x / scalar, vec0.y / scalar);
+			}
+
+			public static Vec2 operator %(Vec2 vec0, int scalar)
+			{
+				return new Vec2(vec0.x % scalar, vec0.y % scalar);
 			}
         }
     }

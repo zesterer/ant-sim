@@ -15,6 +15,7 @@ namespace AntSim
             private World world;
             private List<Ant> ants = new List<Ant>();
 			private List<Nest> nests = new List<Nest>();
+			private List<Food> food = new List<Food>();
 
 			Random generator = new Random(142857);
 
@@ -27,13 +28,17 @@ namespace AntSim
 				for (int i = 0; i < 1000; i++)
 				{
 					Ant ant = new Ant();
-					ant.placeRandomly(this.world, this.generator);
+					ant.PlaceRandomly(this.world, this.generator);
 					this.ants.Add(ant);
 				}
 
 				//Create a few test nests
 				for (int i = 0; i < 10; i++)
 					this.nests.Add(new Nest());
+
+				//Create a few pieces of test food
+				for (int i = 0; i < 10; i++)
+					this.food.Add(new Food());
             }
 
 			public int Time

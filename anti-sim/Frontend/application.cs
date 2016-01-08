@@ -12,7 +12,7 @@ namespace AntSim
         {
             private Simulation.Context mainContext;
             private DisplayForm displayForm;
-			private int frameSkip = 4;
+			private int frameSkip = 1;
 
             public Application()
             {

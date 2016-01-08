@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 namespace AntSim
 {
 	namespace Simulation
 	{
-		class Nest
+		class Food
 		{
 			private Common.Vec2 position;
 
-			public Nest ()
+			public Food()
 			{
 			}
 
