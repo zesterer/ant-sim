@@ -17,6 +17,7 @@ namespace AntSim
             private Application parent;
             private bool paused;
 			private int lastDrawTime = 0;
+			private float displayScale = 1.0f;
 
              public DisplayForm(Application parent = null)
              {
@@ -71,7 +72,7 @@ namespace AntSim
 					this.pauseButton.Text = "Pause";
 			}
 
-			private void DrawAnt(Graphics graphics, Brush brush, Common.Vec2 position, int radius)
+			private void DrawObject(Graphics graphics, Brush brush, Common.Vec2 position, int radius)
 			{
 				graphics.FillEllipse(brush, new RectangleF(position.X - radius, position.Y - radius, radius * 2 + 1, radius * 2 + 1));
 			}
@@ -81,12 +82,26 @@ namespace AntSim
 
 				e.Graphics.Clear(Color.White);
 
-				SolidBrush brush = new SolidBrush(Color.Black);
+				SolidBrush antBrush = new SolidBrush(Color.Brown);
+				SolidBrush foodBrush = new SolidBrush(Color.Green);
+				SolidBrush nestBrush = new SolidBrush(Color.Blue);
 
 				for (int i = 0; i < this.parent.Context.AntCount; i ++)
 				{
 					Simulation.Ant ant = this.parent.Context.getAnt(i);
-					this.DrawAnt(e.Graphics, brush, ant.Position, 0);
+					this.DrawObject(e.Graphics, antBrush, ant.Position * this.displayScale, (int)(1 * this.displayScale));
+				}
+
+				for (int i = 0; i < this.parent.Context.FoodCount; i ++)
+				{
+					Simulation.Food food = this.parent.Context.getFood(i);
+							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(1 * this.displayScale));
+				}
+
+				for (int i = 0; i < this.parent.Context.NestCount; i ++)
+				{
+					Simulation.Nest nest = this.parent.Context.getNest(i);
+									this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(1 * this.displayScale));
 				}
 			}
         }

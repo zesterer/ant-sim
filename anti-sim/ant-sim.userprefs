@@ -1,8 +1,15 @@
 ﻿<Properties StartupItem="ant-sim.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Frontend/DisplayForm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Simulation/Ant.cs">
     <Files>
-      <File FileName="Frontend/DisplayForm.cs" Line="27" Column="15" />
+      <File FileName="Frontend/DisplayForm.cs" Line="87" Column="53" />
+      <File FileName="Simulation/Ant.cs" Line="164" Column="3" />
+      <File FileName="Simulation/Context.cs" Line="20" Column="38" />
+      <File FileName="Simulation/Food.cs" Line="20" Column="5" />
+      <File FileName="Simulation/region.cs" Line="1" Column="1" />
+      <File FileName="Simulation/world.cs" Line="1" Column="1" />
+      <File FileName="Simulation/nest.cs" Line="15" Column="30" />
+      <File FileName="Common/vec2.cs" Line="103" Column="67" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

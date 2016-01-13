@@ -38,6 +38,11 @@ namespace AntSim
 				get { return Math.Sqrt(this.X * this.X + this.Y * this.Y); }
 			}
 
+			public double DistanceTo(Vec2 other)
+			{
+				return (this - other).Magnitude;
+			}
+
             public static Vec2 operator +(Vec2 vec0, Vec2 vec1)
             {
                 return new Vec2(vec0.x + vec1.x, vec0.y + vec1.y);
@@ -86,6 +91,21 @@ namespace AntSim
 			public static Vec2 operator %(Vec2 vec0, int scalar)
 			{
 				return new Vec2(vec0.x % scalar, vec0.y % scalar);
+			}
+
+			public static bool operator ==(Vec2 vec0, Vec2 vec1)
+			{
+				return vec0.X == vec1.X && vec0.Y == vec1.Y;
+			}
+
+			public static bool operator !=(Vec2 vec0, Vec2 vec1)
+			{
+				return !(vec0.X == vec1.X && vec0.Y == vec1.Y);
+			}
+
+			public static Vec2 operator *(Vec2 vec0, float scalar)
+			{
+				return new Vec2((int)(vec0.x * scalar), (int)(vec0.y * scalar));
 			}
         }
     }

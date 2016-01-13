@@ -49,7 +49,7 @@ namespace AntSim
             public void TickSimulation()
             {
                 //Tick the simulation context
-                Console.WriteLine("Ticking...");
+                //Console.WriteLine("Ticking...");
 
 				for (int i = 0; i < this.frameSkip; i ++)
 	                this.mainContext.Tick();
