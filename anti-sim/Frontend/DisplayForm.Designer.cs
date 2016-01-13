@@ -44,7 +44,7 @@ namespace AntSim
 	            // 
 				this.drawPanel.Location = new System.Drawing.Point(13, 49);
 				this.drawPanel.Name = "drawPanel";
-				this.drawPanel.Size = new System.Drawing.Size(695, 432);
+				this.drawPanel.Size = new System.Drawing.Size(438, 554);
 				this.drawPanel.TabIndex = 0;
 				this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanelPaint);
 				this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanelClick);
@@ -92,7 +92,7 @@ namespace AntSim
 	            // 
 	            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 	            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-	            this.ClientSize = new System.Drawing.Size(720, 493);
+	            this.ClientSize = new System.Drawing.Size(466, 620);
 	            this.Controls.Add(this.button3);
 	            this.Controls.Add(this.button2);
 	            this.Controls.Add(this.pauseButton);

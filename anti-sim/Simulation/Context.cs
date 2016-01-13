@@ -25,7 +25,7 @@ namespace AntSim
 				this.world.Setup(16, 16, 16);
 
                 //Create a few test ants
-				for (int i = 0; i < 500; i++)
+				for (int i = 0; i < 300; i++)
 				{
 					Ant ant = new Ant(this);
 					ant.PlaceRandomly();
@@ -33,10 +33,13 @@ namespace AntSim
 				}
 
 				//Create a few test nests
-				for (int i = 0; i < 4; i++)
+				Nest mainNest = new Nest(this);
+				mainNest.Position = this.world.Size / 2;
+				this.nests.Add(mainNest);
+				for (int i = 0; i < 0; i++)
 				{
-					Nest nest = new Nest();
-					nest.PlaceRandomly(this.world, this.generator);
+					Nest nest = new Nest(this);
+					nest.PlaceRandomly();
 					this.nests.Add(nest);
 				}
 

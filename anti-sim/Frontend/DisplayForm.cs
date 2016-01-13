@@ -17,7 +17,7 @@ namespace AntSim
             private Application parent;
             private bool paused;
 			private int lastDrawTime = 0;
-			private float displayScale = 1.0f;
+			private float displayScale = 2.0f;
 
              public DisplayForm(Application parent = null)
              {

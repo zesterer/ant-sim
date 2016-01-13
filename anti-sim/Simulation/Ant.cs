@@ -90,10 +90,17 @@ namespace AntSim
 				List<Food> foodHere = this.parent.getFoodAt(this.Position, 5.0);
 				List<Nest> nestsHere = this.parent.getNestsAt(this.Position, 5.0);
 
+				//Randomly offset motion for the purposes of variation
+				if (this.parent.Generator.Next(0, 10) >= 4)
+					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
-
+				Common.Vec2 net = new Common.Vec2(0);
+				int i = 0;
 				foreach (Ant ant in antsHere)
 				{
+					net += ant.Position;
+					i ++;
+
 					if (ant.Knowledge.FoodPosition == this.Knowledge.FoodPosition && !ant.Knowledge.KnowsFood && this.Knowledge.KnowsFood)
 					{
 						//Conflicting information! Update if the other one is correct...
@@ -116,6 +123,10 @@ namespace AntSim
 					}
 				}
 
+				//Move towards the average of ants
+				if (this.parent.Generator.Next(0, 2) == 0 && this.state == AntState.RANDOM_WALK)
+					this.StepTowards(net / i);
+
                 //Do stuff
 				switch (this.state)
 				{
@@ -125,7 +136,6 @@ namespace AntSim
 					if (this.parent.Generator.Next(0, 30) == 0)
 					this.randomWalkDirection = new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2));
 					this.Move(this.randomWalkDirection);
-					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
 					foreach (Ant ant in antsHere)
 					{
@@ -151,7 +161,7 @@ namespace AntSim
 						this.knowledge.FoodPosition = food.Position;
 						this.knowledge.KnowsFood = true;
 						this.knowledge.FoodVisitTime = this.parent.Time;
-						this.state = AntState.RETURN_FOOD;
+						this.state = AntState.COLLECT_FOOD;
 						break;
 					}
 
@@ -161,7 +171,7 @@ namespace AntSim
 						this.knowledge.NestPosition = nest.Position;
 						this.knowledge.KnowsNest = true;
 						this.knowledge.NestVisitTime = this.parent.Time;
-						this.state = AntState.COLLECT_FOOD;
+						this.state = AntState.RETURN_FOOD;
 						break;
 					}
 
@@ -169,7 +179,6 @@ namespace AntSim
 
 					case AntState.COLLECT_FOOD:
 					this.StepTowards(this.knowledge.FoodPosition);
-					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
 					//Collect some food
 					if (this.Position == this.Knowledge.FoodPosition)
@@ -198,7 +207,6 @@ namespace AntSim
 
 					case AntState.RETURN_FOOD:
 					this.StepTowards(this.knowledge.NestPosition);
-					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
 					//Return the food
 					if (this.Position == this.Knowledge.NestPosition)
