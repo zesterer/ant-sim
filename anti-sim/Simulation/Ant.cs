@@ -18,20 +18,20 @@ namespace AntSim
 		struct AntKnowledge
 		{
 			public bool KnowsFood;
-			public bool VisitedFood;
 			public bool KnowsNest;
-			public bool VisitedNest;
+			public int FoodVisitTime;
+			public int NestVisitTime;
 			public Common.Vec2 FoodPosition;
 			public Common.Vec2 NestPosition;
 
-			public AntKnowledge(bool knowsFood, bool visitedFood, bool knowsNest, bool visitedNest, Common.Vec2 foodPosition, Common.Vec2 nestPosition)
+			public AntKnowledge()
 			{
-				this.KnowsFood = knowsFood;
-				this.VisitedFood = visitedFood;
-				this.KnowsNest = knowsNest;
-				this.VisitedNest = visitedNest;
-				this.FoodPosition = foodPosition;
-				this.NestPosition = nestPosition;
+				this.KnowsFood = false;
+				this.KnowsNest = false;
+				this.FoodVisitTime = 0;
+				this.NestVisitTime = 0;
+				this.FoodPosition = new Common.Vec2(0, 0);
+				this.NestPosition = new Common.Vec2(0, 0);
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace AntSim
 			private int time = 0;
 
 			private AntState state = AntState.RANDOM_WALK;
-			private AntKnowledge knowledge = new AntKnowledge(false, false, false, false, new Common.Vec2(0, 0), new Common.Vec2(0, 0));
+			private AntKnowledge knowledge = new AntKnowledge();
 			private int foodCargo = 0;
 
 			public Ant(Context parent) : base(parent)
@@ -85,111 +85,144 @@ namespace AntSim
 			}
 
 			public void Tick()
-            {
-				if (this.parent.Generator == null)
-					this.parent.Generator = new Random(142857);
+			{
+				List<Ant> antsHere = this.parent.getAntsAt(this.Position, 10.0);
+				List<Food> foodHere = this.parent.getFoodAt(this.Position, 5.0);
+				List<Nest> nestsHere = this.parent.getNestsAt(this.Position, 5.0);
 
-				//Select the correct state
-				if (this.state == AntState.COLLECT_FOOD)
-				{
-					if (!this.Knowledge.KnowsFood)
-						this.state = AntState.RANDOM_WALK;
-				}
-				else if (this.state == AntState.RETURN_FOOD)
-				{
-					if (!this.Knowledge.KnowsNest)
-						this.state = AntState.RANDOM_WALK;
-				}
 
-				List<Ant> antsHere = this.parent.getAntsAt(this.Position);
-				List<Food> foodHere = this.parent.getFoodAt(this.Position);
-				List<Nest> nestsHere = this.parent.getNestsAt(this.Position);
+
+				foreach (Ant ant in antsHere)
+				{
+					if (ant.Knowledge.FoodPosition == this.Knowledge.FoodPosition && !ant.Knowledge.KnowsFood && this.Knowledge.KnowsFood)
+					{
+						//Conflicting information! Update if the other one is correct...
+						if (ant.Knowledge.FoodVisitTime > this.Knowledge.FoodVisitTime)
+						{
+							this.knowledge.KnowsFood = ant.Knowledge.KnowsFood;
+							this.knowledge.FoodVisitTime = ant.Knowledge.FoodVisitTime;
+							Console.WriteLine("Found an ant with more up-to-date info!");
+
+							if (this.knowledge.KnowsFood)
+							{
+								Console.WriteLine("And they say they've found food!");
+							}
+							else
+							{
+								Console.WriteLine("And they say NO FOOD!");
+								this.state = AntState.RANDOM_WALK;
+							}
+						}
+					}
+				}
 
                 //Do stuff
 				switch (this.state)
 				{
 					case AntState.RANDOM_WALK:
 
-						//Do some walking
+					//Do some walking
 					if (this.parent.Generator.Next(0, 30) == 0)
-						this.randomWalkDirection = new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2));
-						this.Move(this.randomWalkDirection);
+					this.randomWalkDirection = new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2));
+					this.Move(this.randomWalkDirection);
 					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
-						foreach (Ant ant in antsHere)
+					foreach (Ant ant in antsHere)
+					{
+						if (ant.Knowledge.KnowsFood && !this.Knowledge.KnowsFood && ant.Knowledge.FoodPosition != this.Knowledge.FoodPosition)
 						{
-							if (ant.Knowledge.KnowsFood && !this.Knowledge.KnowsFood)
-							{
-								this.knowledge.FoodPosition = ant.Knowledge.FoodPosition;
-								this.knowledge.KnowsFood = true;
-								this.state = AntState.RETURN_FOOD;
-							}
-
-							if (ant.Knowledge.KnowsNest && !this.Knowledge.KnowsNest)
-							{
-								this.knowledge.NestPosition = ant.Knowledge.NestPosition;
-								this.knowledge.KnowsNest = true;
-								this.state = AntState.COLLECT_FOOD;
-							}
-						}
-
-						foreach (Food food in foodHere)
-						{
-							this.knowledge.FoodPosition = food.Position;
+							this.knowledge.FoodPosition = ant.Knowledge.FoodPosition;
 							this.knowledge.KnowsFood = true;
-							this.state = AntState.RETURN_FOOD;
-							break;
+							this.knowledge.FoodVisitTime = ant.Knowledge.FoodVisitTime;
+							this.state = AntState.RANDOM_WALK;
 						}
 
-						foreach (Nest nest in nestsHere)
+						if (ant.Knowledge.KnowsNest && !this.Knowledge.KnowsNest && ant.Knowledge.NestPosition != this.Knowledge.NestPosition)
 						{
+							this.knowledge.NestPosition = ant.Knowledge.NestPosition;
 							this.knowledge.KnowsNest = true;
-							this.knowledge.NestPosition = nest.Position;
-							this.knowledge.KnowsNest = true;
-							this.state = AntState.COLLECT_FOOD;
-							break;
+							this.knowledge.NestVisitTime = ant.Knowledge.NestVisitTime;
+							this.state = AntState.RANDOM_WALK;
 						}
+					}
 
+					foreach (Food food in foodHere)
+					{
+						this.knowledge.FoodPosition = food.Position;
+						this.knowledge.KnowsFood = true;
+						this.knowledge.FoodVisitTime = this.parent.Time;
+						this.state = AntState.RETURN_FOOD;
 						break;
+					}
+
+					foreach (Nest nest in nestsHere)
+					{
+						this.knowledge.KnowsNest = true;
+						this.knowledge.NestPosition = nest.Position;
+						this.knowledge.KnowsNest = true;
+						this.knowledge.NestVisitTime = this.parent.Time;
+						this.state = AntState.COLLECT_FOOD;
+						break;
+					}
+
+					break;
 
 					case AntState.COLLECT_FOOD:
-						this.StepTowards(this.knowledge.FoodPosition);
+					this.StepTowards(this.knowledge.FoodPosition);
 					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
-						//Collect some food
-						if (this.Position == this.Knowledge.FoodPosition)
+					//Collect some food
+					if (this.Position == this.Knowledge.FoodPosition)
+					{
+						if (foodHere.Count == 0)
 						{
-							if (foodHere.Count == 0)
-								this.knowledge.KnowsFood = false;
-							else
-							{
-								this.knowledge.KnowsFood = true;
-								foodHere[0].FoodCargo -= 100;
-								this.foodCargo += 100;
-								this.state = AntState.RETURN_FOOD;
-							}
+							this.knowledge.KnowsFood = false;
+							this.knowledge.FoodVisitTime = this.parent.Time;
+							this.state = AntState.RANDOM_WALK;
+							Console.WriteLine("NO FOOD!");
 						}
+						else
+						{
+							this.knowledge.KnowsFood = true;
+							foodHere[0].FoodCargo -= 10;
+							this.foodCargo += 10;
+							this.state = AntState.RETURN_FOOD;
+							this.knowledge.FoodVisitTime = this.parent.Time;
+						}
+					}
+
+					if (!this.Knowledge.KnowsFood)
+						this.state = AntState.RANDOM_WALK;
 					
-						break;
+					break;
 
 					case AntState.RETURN_FOOD:
-						this.StepTowards(this.knowledge.NestPosition);
+					this.StepTowards(this.knowledge.NestPosition);
 					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
-						//Return the food
-						if (this.Position == this.Knowledge.NestPosition)
+					//Return the food
+					if (this.Position == this.Knowledge.NestPosition)
+					{
+						if (nestsHere.Count == 0)
 						{
-							if (nestsHere.Count == 0)
-								this.knowledge.KnowsNest = false;
-							else
-							{
-								nestsHere[0].FoodCargo += this.foodCargo;
-								this.foodCargo = 0;
-								this.state = AntState.COLLECT_FOOD;
-							}
+							this.knowledge.KnowsNest = false;
+							this.knowledge.NestVisitTime = this.parent.Time;
+							this.state = AntState.RANDOM_WALK;
+							Console.WriteLine("NO NEST!");
 						}
+						else
+						{
+							nestsHere[0].FoodCargo += this.foodCargo;
+							this.foodCargo = 0;
+							this.state = AntState.COLLECT_FOOD;
+							this.knowledge.NestVisitTime = this.parent.Time;
+						}
+					}
 
-						break;
+					if (!this.Knowledge.KnowsNest)
+						this.state = AntState.RANDOM_WALK;
+
+					break;
 				}
             }
 

@@ -25,7 +25,7 @@ namespace AntSim
 				this.world.Setup(16, 16, 16);
 
                 //Create a few test ants
-				for (int i = 0; i < 200; i++)
+				for (int i = 0; i < 500; i++)
 				{
 					Ant ant = new Ant(this);
 					ant.PlaceRandomly();
@@ -33,7 +33,7 @@ namespace AntSim
 				}
 
 				//Create a few test nests
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 4; i++)
 				{
 					Nest nest = new Nest();
 					nest.PlaceRandomly(this.world, this.generator);
@@ -41,7 +41,7 @@ namespace AntSim
 				}
 
 				//Create a few pieces of test food
-				for (int i = 0; i < 30; i++)
+				for (int i = 0; i < 0; i++)
 				{
 					Food food = new Food(this);
 					food.PlaceRandomly();
@@ -81,7 +81,7 @@ namespace AntSim
 				{
 					if (this.food[i].FoodCargo <= 0)
 					{
-						this.food.Remove(this.food[i]);
+						this.food.RemoveAt(i);
 						Console.WriteLine("Food consumed");
 					}
 					else
@@ -100,6 +100,20 @@ namespace AntSim
                 this.world.Tick();
 				this.time ++;
             }
+
+			public void createFoodAt(Common.Vec2 position)
+			{
+				Food food = new Food(this);
+				food.Position = position;
+				this.food.Add(food);
+			}
+
+			public void createAntAt(Common.Vec2 position)
+			{
+				Ant ant = new Ant(this);
+				ant.Position = position;
+				this.ants.Add(ant);
+			}
 
 			public List<Ant> getAntsAt(Common.Vec2 position, double range = 1.0)
 			{

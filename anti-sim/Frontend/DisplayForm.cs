@@ -47,7 +47,7 @@ namespace AntSim
 				}
             }
 
-            private void pauseButton_Click(object sender, EventArgs e)
+            private void pauseButtonClick(object sender, EventArgs e)
             {
                 this.paused ^= true;
 
@@ -72,12 +72,24 @@ namespace AntSim
 					this.pauseButton.Text = "Pause";
 			}
 
+			private void drawPanelClick(object sender, MouseEventArgs e)
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					this.parent.Context.createFoodAt(new Common.Vec2((int)(e.X / this.displayScale), (int)(e.Y / this.displayScale)));
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+							this.parent.Context.createAntAt(new Common.Vec2((int)(e.X / this.displayScale), (int)(e.Y / this.displayScale)));
+				}
+			}
+
 			private void DrawObject(Graphics graphics, Brush brush, Common.Vec2 position, int radius)
 			{
 				graphics.FillEllipse(brush, new RectangleF(position.X - radius, position.Y - radius, radius * 2 + 1, radius * 2 + 1));
 			}
 
-			private void drawPanel_Paint(object sender, PaintEventArgs e)
+			private void drawPanelPaint(object sender, PaintEventArgs e)
 			{
 
 				e.Graphics.Clear(Color.White);
@@ -95,13 +107,13 @@ namespace AntSim
 				for (int i = 0; i < this.parent.Context.FoodCount; i ++)
 				{
 					Simulation.Food food = this.parent.Context.getFood(i);
-							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(1 * this.displayScale));
+							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(2 * this.displayScale));
 				}
 
 				for (int i = 0; i < this.parent.Context.NestCount; i ++)
 				{
 					Simulation.Nest nest = this.parent.Context.getNest(i);
-									this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(1 * this.displayScale));
+									this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(3 * this.displayScale));
 				}
 			}
         }

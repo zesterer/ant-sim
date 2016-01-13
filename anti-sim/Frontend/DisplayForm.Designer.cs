@@ -46,7 +46,8 @@ namespace AntSim
 				this.drawPanel.Name = "drawPanel";
 				this.drawPanel.Size = new System.Drawing.Size(695, 432);
 				this.drawPanel.TabIndex = 0;
-				this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_Paint);
+				this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanelPaint);
+				this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanelClick);
 	            // 
 	            // pauseButton
 	            // 
@@ -59,7 +60,7 @@ namespace AntSim
 	            this.pauseButton.TabIndex = 1;
 	            //this.pauseButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 	            this.pauseButton.UseVisualStyleBackColor = false;
-	            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
+	            this.pauseButton.Click += new System.EventHandler(this.pauseButtonClick);
 	            // 
 	            // button2
 	            // 
