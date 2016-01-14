@@ -94,13 +94,8 @@ namespace AntSim
 				if (this.parent.Generator.Next(0, 10) >= 4)
 					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
 
-				Common.Vec2 net = new Common.Vec2(0);
-				int i = 0;
 				foreach (Ant ant in antsHere)
 				{
-					net += ant.Position;
-					i ++;
-
 					if (ant.Knowledge.FoodPosition == this.Knowledge.FoodPosition && !ant.Knowledge.KnowsFood && this.Knowledge.KnowsFood)
 					{
 						//Conflicting information! Update if the other one is correct...
@@ -123,10 +118,6 @@ namespace AntSim
 					}
 				}
 
-				//Move towards the average of ants
-				if (this.parent.Generator.Next(0, 2) == 0 && this.state == AntState.RANDOM_WALK)
-					this.StepTowards(net / i);
-
                 //Do stuff
 				switch (this.state)
 				{
@@ -137,6 +128,8 @@ namespace AntSim
 					this.randomWalkDirection = new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2));
 					this.Move(this.randomWalkDirection);
 
+					Common.Vec2 net = new Common.Vec2(0);
+					int i = 0;
 					foreach (Ant ant in antsHere)
 					{
 						if (ant.Knowledge.KnowsFood && !this.Knowledge.KnowsFood && ant.Knowledge.FoodPosition != this.Knowledge.FoodPosition)
@@ -154,6 +147,18 @@ namespace AntSim
 							this.knowledge.NestVisitTime = ant.Knowledge.NestVisitTime;
 							this.state = AntState.RANDOM_WALK;
 						}
+
+						net += ant.Position;
+						i ++;
+					}
+
+					//Move towards the average of ants
+					if (this.parent.Generator.Next(0, 2) == 0 && this.state == AntState.RANDOM_WALK)
+					{
+						if ((net / i - this.Position).Magnitude < 2)
+							this.Move((this.Position - net / i).Sign);
+						else
+							this.StepTowards(net / i);
 					}
 
 					foreach (Food food in foodHere)

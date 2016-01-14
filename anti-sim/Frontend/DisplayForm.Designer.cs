@@ -35,66 +35,67 @@ namespace AntSim
 	            this.components = new System.ComponentModel.Container();
 	            this.drawPanel = new System.Windows.Forms.Panel();
 	            this.pauseButton = new System.Windows.Forms.Button();
-	            this.button2 = new System.Windows.Forms.Button();
-	            this.button3 = new System.Windows.Forms.Button();
+				this.clearAntsButton = new System.Windows.Forms.Button();
+				this.clearFoodButton = new System.Windows.Forms.Button();
+				this.clearNestsButton = new System.Windows.Forms.Button();
 	            this.simulationTimer = new System.Windows.Forms.Timer(this.components);
 	            this.SuspendLayout();
-	            // 
-				// drawPanel
-	            // 
+
 				this.drawPanel.Location = new System.Drawing.Point(13, 49);
 				this.drawPanel.Name = "drawPanel";
 				this.drawPanel.Size = new System.Drawing.Size(438, 554);
 				this.drawPanel.TabIndex = 0;
 				this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanelPaint);
 				this.drawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPanelClick);
-	            // 
-	            // pauseButton
-	            // 
+
 	            this.pauseButton.BackColor = System.Drawing.SystemColors.ButtonFace;
 	            this.pauseButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 	            this.pauseButton.Location = new System.Drawing.Point(13, 13);
 	            this.pauseButton.Name = "pauseButton";
 				this.pauseButton.Text = "Pause";
-	            this.pauseButton.Size = new System.Drawing.Size(60, 30);
+	            this.pauseButton.Size = new System.Drawing.Size(65, 30);
 	            this.pauseButton.TabIndex = 1;
 	            //this.pauseButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 	            this.pauseButton.UseVisualStyleBackColor = false;
 	            this.pauseButton.Click += new System.EventHandler(this.pauseButtonClick);
-	            // 
-	            // button2
-	            // 
-	            this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
-	            this.button2.Location = new System.Drawing.Point(86, 13);
-	            this.button2.Name = "button2";
-	            this.button2.Size = new System.Drawing.Size(60, 30);
-	            this.button2.TabIndex = 2;
-	            this.button2.Text = "a test";
-	            this.button2.UseVisualStyleBackColor = false;
-	            // 
-	            // button3
-	            // 
-	            this.button3.BackColor = System.Drawing.SystemColors.ButtonFace;
-	            this.button3.Location = new System.Drawing.Point(159, 13);
-	            this.button3.Name = "button3";
-	            this.button3.Size = new System.Drawing.Size(60, 30);
-	            this.button3.TabIndex = 3;
-	            this.button3.Text = "button";
-	            this.button3.UseVisualStyleBackColor = false;
-	            // 
-	            // simulationTimer
-	            // 
+
+				this.clearAntsButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+				this.clearAntsButton.Location = new System.Drawing.Point(91, 13);
+				this.clearAntsButton.Name = "clearAntsButton";
+				this.clearAntsButton.Size = new System.Drawing.Size(65, 30);
+				this.clearAntsButton.TabIndex = 2;
+				this.clearAntsButton.Text = "Clear Ants";
+				this.clearAntsButton.UseVisualStyleBackColor = false;
+				this.clearAntsButton.Click += new System.EventHandler(this.clearAntsButtonClick);
+
+				this.clearFoodButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+				this.clearFoodButton.Location = new System.Drawing.Point(169, 13);
+				this.clearFoodButton.Name = "clearFoodButton";
+				this.clearFoodButton.Size = new System.Drawing.Size(65, 30);
+				this.clearFoodButton.TabIndex = 3;
+				this.clearFoodButton.Text = "Clear Food";
+				this.clearFoodButton.UseVisualStyleBackColor = false;
+				this.clearFoodButton.Click += new System.EventHandler(this.clearFoodButtonClick);
+
+				this.clearNestsButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+				this.clearNestsButton.Location = new System.Drawing.Point(247, 13);
+				this.clearNestsButton.Name = "clearNestsButton";
+				this.clearNestsButton.Size = new System.Drawing.Size(65, 30);
+				this.clearNestsButton.TabIndex = 3;
+				this.clearNestsButton.Text = "Clear Nests";
+				this.clearNestsButton.UseVisualStyleBackColor = false;
+				this.clearNestsButton.Click += new System.EventHandler(this.clearNestsButtonClick);
+
 	            this.simulationTimer.Enabled = true;
 	            this.simulationTimer.Interval = 25;
 	            this.simulationTimer.Tick += new System.EventHandler(this.simulationTimer_Tick);
-	            // 
-	            // DisplayForm
-	            // 
+
 	            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 	            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 	            this.ClientSize = new System.Drawing.Size(466, 620);
-	            this.Controls.Add(this.button3);
-	            this.Controls.Add(this.button2);
+				this.Controls.Add(this.clearNestsButton);
+				this.Controls.Add(this.clearFoodButton);
+				this.Controls.Add(this.clearAntsButton);
 	            this.Controls.Add(this.pauseButton);
 	            this.Controls.Add(this.drawPanel);
 	            this.Name = "DisplayForm";
@@ -106,8 +107,9 @@ namespace AntSim
 
             private System.Windows.Forms.Panel drawPanel;
             private System.Windows.Forms.Button pauseButton;
-            private System.Windows.Forms.Button button2;
-            private System.Windows.Forms.Button button3;
+            private System.Windows.Forms.Button clearAntsButton;
+            private System.Windows.Forms.Button clearFoodButton;
+			private System.Windows.Forms.Button clearNestsButton;
             private System.Windows.Forms.Timer simulationTimer;
         }
     }

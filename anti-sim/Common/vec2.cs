@@ -43,6 +43,14 @@ namespace AntSim
 				return (this - other).Magnitude;
 			}
 
+			public Vec2 Sign
+			{
+				get
+				{
+					return new Common.Vec2(Math.Sign(this.x), Math.Sign(this.y));
+				}
+			}
+
             public static Vec2 operator +(Vec2 vec0, Vec2 vec1)
             {
                 return new Vec2(vec0.x + vec1.x, vec0.y + vec1.y);

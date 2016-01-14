@@ -118,6 +118,28 @@ namespace AntSim
 				this.ants.Add(ant);
 			}
 
+			public void createNestAt(Common.Vec2 position)
+			{
+				Nest nest = new Nest(this);
+				nest.Position = position;
+				this.nests.Add(nest);
+			}
+
+			public void clearFood()
+			{
+				this.food.Clear();
+			}
+
+			public void clearAnts()
+			{
+				this.ants.Clear();
+			}
+
+			public void clearNests()
+			{
+				this.nests.Clear();
+			}
+
 			public List<Ant> getAntsAt(Common.Vec2 position, double range = 1.0)
 			{
 				List<Ant> ants = new List<Ant>();

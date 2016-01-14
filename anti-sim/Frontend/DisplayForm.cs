@@ -72,6 +72,21 @@ namespace AntSim
 					this.pauseButton.Text = "Pause";
 			}
 
+			private void clearAntsButtonClick(object sender, EventArgs e)
+			{
+				this.parent.Context.clearAnts();
+			}
+
+			private void clearFoodButtonClick(object sender, EventArgs e)
+			{
+				this.parent.Context.clearFood();
+			}
+
+			private void clearNestsButtonClick(object sender, EventArgs e)
+			{
+				this.parent.Context.clearNests();
+			}
+
 			private void drawPanelClick(object sender, MouseEventArgs e)
 			{
 				if (e.Button == MouseButtons.Left)
@@ -81,6 +96,10 @@ namespace AntSim
 				else if (e.Button == MouseButtons.Right)
 				{
 							this.parent.Context.createAntAt(new Common.Vec2((int)(e.X / this.displayScale), (int)(e.Y / this.displayScale)));
+				}
+				else if (e.Button == MouseButtons.Middle)
+				{
+					this.parent.Context.createNestAt(new Common.Vec2((int)(e.X / this.displayScale), (int)(e.Y / this.displayScale)));
 				}
 			}
 
@@ -101,19 +120,19 @@ namespace AntSim
 				for (int i = 0; i < this.parent.Context.AntCount; i ++)
 				{
 					Simulation.Ant ant = this.parent.Context.getAnt(i);
-					this.DrawObject(e.Graphics, antBrush, ant.Position * this.displayScale, (int)(1 * this.displayScale));
+					this.DrawObject(e.Graphics, antBrush, ant.Position * this.displayScale, (int)(0.5f * this.displayScale));
 				}
 
 				for (int i = 0; i < this.parent.Context.FoodCount; i ++)
 				{
 					Simulation.Food food = this.parent.Context.getFood(i);
-							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(2 * this.displayScale));
+							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(2.0f * this.displayScale));
 				}
 
 				for (int i = 0; i < this.parent.Context.NestCount; i ++)
 				{
 					Simulation.Nest nest = this.parent.Context.getNest(i);
-									this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(3 * this.displayScale));
+					this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(3.0f * this.displayScale));
 				}
 			}
         }
