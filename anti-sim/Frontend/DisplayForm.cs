@@ -40,7 +40,7 @@ namespace AntSim
 						this.parent.TickSimulation();
                 }
 
-				if (this.lastDrawTime != this.parent.Context.Time)
+				if (this.lastDrawTime != this.parent.Context.Time || this.paused)
 				{
 					this.drawPanel.Refresh();
 					this.lastDrawTime = this.parent.Context.Time;

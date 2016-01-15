@@ -37,8 +37,7 @@ namespace AntSim
 
         class Ant : Entity
         {
-            private Common.Vec2 velocity;
-			private Common.Vec2 randomWalkDirection;
+            private Common.Vec2 randomWalkDirection;
 
 			private int time = 0;
 
@@ -67,32 +66,33 @@ namespace AntSim
 				get { return this.knowledge; }
 			}
 
-            void Move(Common.Vec2 vec)
-            {
-                this.velocity += vec;
-            }
-
-			//I was going to hack together an implementation of Bresenham's algorithm, but
-			//if this project required proper movement planning, I'd have used a continuous
-			//world with communication distance thresholds instead.
-			public void StepTowards(Common.Vec2 target)
+			public void ForgetNest()
 			{
-				Common.Vec2 relative = target - this.Position;
-				int dimensionalMax = Math.Max(Math.Abs(relative.X), Math.Abs(relative.Y));
+				this.knowledge.KnowsNest = false;
+				this.knowledge.NestPosition = new Common.Vec2(-1, -1);
+			}
 
-				if (dimensionalMax > 0)
-					this.Move(new Common.Vec2(relative.X, relative.Y) / dimensionalMax);
+			public void ForgetFood()
+			{
+				this.knowledge.KnowsFood = false;
+				this.knowledge.FoodPosition = new Common.Vec2(-1, -1);
 			}
 
 			public void Tick()
 			{
-				List<Ant> antsHere = this.parent.getAntsAt(this.Position, 10.0);
-				List<Food> foodHere = this.parent.getFoodAt(this.Position, 5.0);
-				List<Nest> nestsHere = this.parent.getNestsAt(this.Position, 5.0);
+				List<Ant> antsHere = this.parent.getAntsAt(this.Position, 8.0);
+				List<Food> foodHere = this.parent.getFoodAt(this.Position, 8.0);
+				List<Nest> nestsHere = this.parent.getNestsAt(this.Position, 8.0);
 
 				//Randomly offset motion for the purposes of variation
 				if (this.parent.Generator.Next(0, 10) >= 4)
 					this.Move(new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2)));
+
+				//Forget the nest or food occasionally
+				if (this.parent.Generator.Next(0, 2000) == 0)
+					this.ForgetFood();
+				if (this.parent.Generator.Next(0, 2000) == 0)
+					this.ForgetNest();
 
 				foreach (Ant ant in antsHere)
 				{
@@ -116,6 +116,27 @@ namespace AntSim
 							}
 						}
 					}
+
+					if (ant.Knowledge.NestPosition == this.Knowledge.NestPosition && !ant.Knowledge.KnowsNest && this.Knowledge.KnowsNest)
+					{
+						//Conflicting information! Update if the other one is correct...
+						if (ant.Knowledge.NestVisitTime > this.Knowledge.NestVisitTime)
+						{
+							this.knowledge.KnowsNest = ant.Knowledge.KnowsNest;
+							this.knowledge.NestVisitTime = ant.Knowledge.NestVisitTime;
+							Console.WriteLine("Found an ant with more up-to-date info!");
+
+							if (this.knowledge.KnowsNest)
+							{
+								Console.WriteLine("And they say they've found a nest!");
+							}
+							else
+							{
+								Console.WriteLine("And they say NO NEST!");
+								this.state = AntState.RANDOM_WALK;
+							}
+						}
+					}
 				}
 
                 //Do stuff
@@ -132,7 +153,7 @@ namespace AntSim
 					int i = 0;
 					foreach (Ant ant in antsHere)
 					{
-						if (ant.Knowledge.KnowsFood && !this.Knowledge.KnowsFood && ant.Knowledge.FoodPosition != this.Knowledge.FoodPosition)
+						if (ant.Knowledge.KnowsFood && ant.Knowledge.FoodPosition != this.Knowledge.FoodPosition)
 						{
 							this.knowledge.FoodPosition = ant.Knowledge.FoodPosition;
 							this.knowledge.KnowsFood = true;
@@ -140,7 +161,7 @@ namespace AntSim
 							this.state = AntState.RANDOM_WALK;
 						}
 
-						if (ant.Knowledge.KnowsNest && !this.Knowledge.KnowsNest && ant.Knowledge.NestPosition != this.Knowledge.NestPosition)
+						if (ant.Knowledge.KnowsNest && ant.Knowledge.NestPosition != this.Knowledge.NestPosition)
 						{
 							this.knowledge.NestPosition = ant.Knowledge.NestPosition;
 							this.knowledge.KnowsNest = true;
@@ -166,7 +187,9 @@ namespace AntSim
 						this.knowledge.FoodPosition = food.Position;
 						this.knowledge.KnowsFood = true;
 						this.knowledge.FoodVisitTime = this.parent.Time;
-						this.state = AntState.COLLECT_FOOD;
+
+						if (this.knowledge.KnowsNest)
+							this.state = AntState.COLLECT_FOOD;
 						break;
 					}
 
@@ -176,7 +199,9 @@ namespace AntSim
 						this.knowledge.NestPosition = nest.Position;
 						this.knowledge.KnowsNest = true;
 						this.knowledge.NestVisitTime = this.parent.Time;
-						this.state = AntState.RETURN_FOOD;
+
+						if (this.knowledge.KnowsFood)
+							this.state = AntState.RETURN_FOOD;
 						break;
 					}
 
@@ -225,6 +250,7 @@ namespace AntSim
 						}
 						else
 						{
+							this.knowledge.KnowsNest = true;
 							nestsHere[0].FoodCargo += this.foodCargo;
 							this.foodCargo = 0;
 							this.state = AntState.COLLECT_FOOD;
