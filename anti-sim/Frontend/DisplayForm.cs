@@ -115,24 +115,28 @@ namespace AntSim
 
 				SolidBrush antBrush = new SolidBrush(Color.Brown);
 				SolidBrush foodBrush = new SolidBrush(Color.Green);
-				SolidBrush nestBrush = new SolidBrush(Color.Blue);
+				SolidBrush nestBrush = new SolidBrush(Color.Black);
 
-				for (int i = 0; i < this.parent.Context.AntCount; i ++)
+				for (int i = 0; i < this.parent.Context.NestCount; i ++)
 				{
-					Simulation.Ant ant = this.parent.Context.getAnt(i);
-					this.DrawObject(e.Graphics, antBrush, ant.Position * this.displayScale, (int)(0.5f * this.displayScale));
+					Simulation.Nest nest = this.parent.Context.getNest(i);
+					this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(2.0f * this.displayScale));
 				}
 
 				for (int i = 0; i < this.parent.Context.FoodCount; i ++)
 				{
 					Simulation.Food food = this.parent.Context.getFood(i);
-							this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(2.0f * this.displayScale));
+					this.DrawObject(e.Graphics, foodBrush, food.Position * this.displayScale, (int)(2.0f * this.displayScale));
 				}
 
-				for (int i = 0; i < this.parent.Context.NestCount; i ++)
+				for (int i = 0; i < this.parent.Context.AntCount; i ++)
 				{
-					Simulation.Nest nest = this.parent.Context.getNest(i);
-					this.DrawObject(e.Graphics, nestBrush, nest.Position * this.displayScale, (int)(3.0f * this.displayScale));
+					Simulation.Ant ant = this.parent.Context.getAnt(i);
+
+					if (ant.FoodCargo > 0)
+						this.DrawObject(e.Graphics, foodBrush, ant.Position * this.displayScale, (int)(1.0f * this.displayScale));
+
+					this.DrawObject(e.Graphics, antBrush, ant.Position * this.displayScale, (int)(0.5f * this.displayScale));
 				}
 			}
         }

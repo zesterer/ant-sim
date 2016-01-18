@@ -56,6 +56,11 @@ namespace AntSim
 				Console.WriteLine("Created ant at ({0}, {1})", position.X, position.Y);
 			}
 
+			public int FoodCargo
+			{
+				get { return this.foodCargo; }
+			}
+
 			public AntState State
 			{
 				get { return this.state; }
@@ -94,6 +99,8 @@ namespace AntSim
 				if (this.parent.Generator.Next(0, 2000) == 0)
 					this.ForgetNest();
 
+				Common.Vec2 net = new Common.Vec2(0);
+				int i = 0;
 				foreach (Ant ant in antsHere)
 				{
 					if (ant.Knowledge.FoodPosition == this.Knowledge.FoodPosition && !ant.Knowledge.KnowsFood && this.Knowledge.KnowsFood)
@@ -137,6 +144,18 @@ namespace AntSim
 							}
 						}
 					}
+
+					net += ant.Position;
+					i ++;
+				}
+
+				//Move towards the average of ants
+				if (this.parent.Generator.Next(0, 2) == 0 && this.state == AntState.RANDOM_WALK)
+				{
+					if ((net / i - this.Position).Magnitude < 2)
+						this.Move((this.Position - net / i).Sign);
+					//else
+						//this.StepTowards(net / i);
 				}
 
                 //Do stuff
@@ -149,8 +168,6 @@ namespace AntSim
 					this.randomWalkDirection = new Common.Vec2(this.parent.Generator.Next(-1, 2), this.parent.Generator.Next(-1, 2));
 					this.Move(this.randomWalkDirection);
 
-					Common.Vec2 net = new Common.Vec2(0);
-					int i = 0;
 					foreach (Ant ant in antsHere)
 					{
 						if (ant.Knowledge.KnowsFood && ant.Knowledge.FoodPosition != this.Knowledge.FoodPosition)
@@ -168,18 +185,6 @@ namespace AntSim
 							this.knowledge.NestVisitTime = ant.Knowledge.NestVisitTime;
 							this.state = AntState.RANDOM_WALK;
 						}
-
-						net += ant.Position;
-						i ++;
-					}
-
-					//Move towards the average of ants
-					if (this.parent.Generator.Next(0, 2) == 0 && this.state == AntState.RANDOM_WALK)
-					{
-						if ((net / i - this.Position).Magnitude < 2)
-							this.Move((this.Position - net / i).Sign);
-						else
-							this.StepTowards(net / i);
 					}
 
 					foreach (Food food in foodHere)
@@ -205,6 +210,9 @@ namespace AntSim
 						break;
 					}
 
+					if (this.FoodCargo > 0 && this.Knowledge.KnowsNest && this.state == AntState.RANDOM_WALK)
+						this.state = AntState.RETURN_FOOD;
+
 					break;
 
 					case AntState.COLLECT_FOOD:
@@ -217,14 +225,18 @@ namespace AntSim
 						{
 							this.knowledge.KnowsFood = false;
 							this.knowledge.FoodVisitTime = this.parent.Time;
-							this.state = AntState.RANDOM_WALK;
+
+							if (this.FoodCargo > 0)
+								this.state = AntState.RETURN_FOOD;
+							else
+								this.state = AntState.RANDOM_WALK;
+							
 							Console.WriteLine("NO FOOD!");
 						}
 						else
 						{
 							this.knowledge.KnowsFood = true;
-							foodHere[0].FoodCargo -= 10;
-							this.foodCargo += 10;
+							this.foodCargo += foodHere[0].TakeFood(10);
 							this.state = AntState.RETURN_FOOD;
 							this.knowledge.FoodVisitTime = this.parent.Time;
 						}
@@ -245,14 +257,18 @@ namespace AntSim
 						{
 							this.knowledge.KnowsNest = false;
 							this.knowledge.NestVisitTime = this.parent.Time;
-							this.state = AntState.RANDOM_WALK;
+
+							if (this.FoodCargo <= 0)
+								this.state = AntState.COLLECT_FOOD;
+							else
+								this.state = AntState.RANDOM_WALK;
+							
 							Console.WriteLine("NO NEST!");
 						}
 						else
 						{
 							this.knowledge.KnowsNest = true;
-							nestsHere[0].FoodCargo += this.foodCargo;
-							this.foodCargo = 0;
+							this.foodCargo -= nestsHere[0].GiveFood(this.FoodCargo);
 							this.state = AntState.COLLECT_FOOD;
 							this.knowledge.NestVisitTime = this.parent.Time;
 						}

@@ -33,7 +33,7 @@ namespace AntSim
             private void InitializeComponent()
             {
 	            this.components = new System.ComponentModel.Container();
-	            this.drawPanel = new System.Windows.Forms.Panel();
+				this.drawPanel = new DoubleBufferedPanel();
 	            this.pauseButton = new System.Windows.Forms.Button();
 				this.clearAntsButton = new System.Windows.Forms.Button();
 				this.clearFoodButton = new System.Windows.Forms.Button();
@@ -98,14 +98,14 @@ namespace AntSim
 				this.Controls.Add(this.clearAntsButton);
 	            this.Controls.Add(this.pauseButton);
 	            this.Controls.Add(this.drawPanel);
-	            this.Name = "DisplayForm";
-	            this.Text = "DisplayForm";
+	            this.Name = "anti-sim";
+	            this.Text = "Ant Simulation";
 	            this.ResumeLayout(false);
             }
 
             #endregion
 
-            private System.Windows.Forms.Panel drawPanel;
+			private DoubleBufferedPanel drawPanel;
             private System.Windows.Forms.Button pauseButton;
             private System.Windows.Forms.Button clearAntsButton;
             private System.Windows.Forms.Button clearFoodButton;

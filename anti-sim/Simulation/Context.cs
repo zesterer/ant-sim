@@ -25,7 +25,7 @@ namespace AntSim
 				this.world.Setup(16, 16, 16);
 
                 //Create a few test ants
-				for (int i = 0; i < 300; i++)
+				for (int i = 0; i < 500; i++)
 				{
 					Ant ant = new Ant(this);
 					ant.PlaceRandomly();

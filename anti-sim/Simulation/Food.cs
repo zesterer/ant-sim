@@ -18,6 +18,12 @@ namespace AntSim
 				get { return this.foodCargo; }
 				set { this.foodCargo = value; }
 			}
+
+			public int TakeFood(int food)
+			{
+				this.FoodCargo -= food;
+				return food;
+			}
 		}
 	}
 }
