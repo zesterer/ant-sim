@@ -4,6 +4,10 @@ namespace AntSim
 {
     namespace Common
     {
+		//Utility structure for positions and other vector quantities
+		//Superior to C#'s 'Point' class (Point doesn't overload the operators)
+
+		//The code below is fairly simple in nature and can be understood by anyone familiar with operator overloading
         public struct Vec2
         {
             public int x;

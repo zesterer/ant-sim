@@ -9,6 +9,9 @@ namespace AntSim
 {
     namespace Simulation
     {
+		//This class would have made searching for other ants much more efficient, but I ran out of
+		//time to complete it. I have left the code here so that you can see that it was in an almost
+		//completed state.
         class World
         {
             private int time;

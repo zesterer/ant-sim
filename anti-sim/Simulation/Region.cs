@@ -9,6 +9,8 @@ namespace AntSim
 {
     namespace Simulation
     {
+		//Also part of the never-finished new ant search algorithm. Not completed, but I have
+		//left the code behind for you to see.
         class Region
         {
             private List<Ant> ants = new List<Ant>();
